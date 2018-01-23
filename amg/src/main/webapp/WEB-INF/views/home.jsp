@@ -8,7 +8,33 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 <script src="/resources/js/jquery/jquery-1.12.3.min.js"></script>
 <script>
+var hangeul1 = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ'];
+var hangeul2 = ['ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+	
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+	
+	  // Pick a remaining element...
+	  randomIndex = Math.floor(Math.random() * currentIndex);
+	  currentIndex -= 1;
+	
+	  // And swap it with the current element.
+	  temporaryValue = array[currentIndex];
+	  array[currentIndex] = array[randomIndex];
+	  array[randomIndex] = temporaryValue;
+	}
+	
+	return array;
+}
+
 $(function(){
+	// Used like so
+	//arr = shuffle(hangeul1);
+	//console.log(arr);
+	
 	(function($){
 	    
         $.extend({
@@ -203,6 +229,13 @@ $(function(){
                     
                     }  
                     
+                },
+                setHangeul : function() {
+                	var arr = shuffle(hangeul1);
+                	//console.log( arr + hangeul1.length);
+                	for( var i = 1; i <= hangeul1.length; i++) {
+                		$('#sec' + i).text(hangeul1[i-1]);
+                	}
                 }
                     
             }    
@@ -211,6 +244,7 @@ $(function(){
           
         $('#sw_start').on('click', function() {
             $.APP.startTimer('sw');
+            $.APP.setHangeul();
         });    
 
         $('#cd_start').on('click', function() {
@@ -255,6 +289,27 @@ $(function(){
     <br/>
     <br/>
     <span id="sw_status">Idle</span>
+</div>
+
+<div>
+    <h1>Countdown</h1>
+    <span id="cd_h">00</span>:
+    <span id="cd_m">00</span>:
+    <span id="cd_s">00</span>:
+    <span id="cd_ms">00</span>
+    <br/>
+    <br/>
+    <input type="button" value="Start" id="cd_start" />
+    <input type="button" value="Pause" id="cd_pause" />
+    <input type="button" value="Stop"  id="cd_stop" />
+    <input type="button" value="Reset" id="cd_reset" />
+    <br/>
+    <br/>
+    <input type="text" value="15" id="cd_seconds" />
+    secs
+    <br/>
+    <br/>
+    <span id="cd_status">Idle</span>
 </div>
 
 <div>
